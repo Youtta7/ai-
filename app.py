@@ -1,5 +1,6 @@
 import os
 import joblib
+import matplotlib.pyplot as plt
 import pandas as pd
 import streamlit as st
 from src.preprocessing import tokeniser
@@ -31,40 +32,201 @@ try:
 except FileNotFoundError:
     st.error(
         "Modèle introuvable (`models/sentiment_model.pkl`). Lancez d'abord"
-        " `python src/model.py` dans le terminal."
+        " `py -3.12 -m src.model` dans le terminal."
     )
     st.stop()
 
 
+def detecter_categorie(texte: str) -> str:
+    """Détecte une catégorie métier simple à partir du texte."""
+    t = str(texte).lower()
+    if any(
+        k in t
+        for k in [
+            "livraison",
+            "colis",
+            "retard",
+            "livreur",
+            "expédition",
+            "expedition",
+            "reçu",
+            "recu",
+        ]
+    ):
+        return "Livraison"
+    if any(
+        k in t
+        for k in [
+            "produit",
+            "article",
+            "qualité",
+            "qualite",
+            "cassé",
+            "casse",
+            "abîmé",
+            "abime",
+            "taille",
+            "couleur",
+        ]
+    ):
+        return "Produit"
+    if any(
+        k in t
+        for k in [
+            "facture",
+            "paiement",
+            "prix",
+            "remboursement",
+            "prélèvement",
+            "prelevement",
+            "abonnement",
+            "cher",
+        ]
+    ):
+        return "Facturation / Paiement"
+    if any(
+        k in t
+        for k in [
+            "service",
+            "support",
+            "conseiller",
+            "réponse",
+            "reponse",
+            "contact",
+            "attente",
+        ]
+    ):
+        return "Service client"
+    return "Autre"
+
+
+def normaliser_sentiment(val: str) -> str:
+    s = str(val).strip().lower()
+    if s.startswith("pos"):
+        return "Positif"
+    if s.startswith("neu"):
+        return "Neutre"
+    if s.startswith("nég") or s.startswith("neg"):
+        return "Négatif"
+    return str(val).strip()
+
+
+def afficher_graphiques_categorie_periode(
+    df_source: pd.DataFrame, colonne_texte: str, colonne_sent: str
+) -> None:
+    """Affiche la répartition des sentiments par catégorie et par période (simulée ou réelle)."""
+    if df_source.empty:
+        return
+
+    df_viz = df_source.copy()
+    df_viz["_sent"] = df_viz[colonne_sent].apply(normaliser_sentiment)
+
+    # Catégorie : colonne existante si présente, sinon détection automatique par mots-clés
+    col_cat_existante = next(
+        (c for c in ["categorie", "catégorie", "category"] if c in df_viz.columns),
+        None,
+    )
+    if col_cat_existante is not None:
+        df_viz["_cat"] = df_viz[col_cat_existante].fillna("Autre").astype(str)
+    else:
+        df_viz["_cat"] = df_viz[colonne_texte].fillna("").astype(str).apply(detecter_categorie)
+
+    # Période : colonne date/période si présente, sinon période fictive répartie sur 3 créneaux
+    col_per_existante = next(
+        (c for c in ["periode", "période", "date", "mois"] if c in df_viz.columns),
+        None,
+    )
+    if col_per_existante is not None:
+        df_viz["_per"] = df_viz[col_per_existante].fillna("Non précisée").astype(str)
+        ordre_periodes = list(dict.fromkeys(df_viz["_per"]))
+        titre_periode = "Répartition des sentiments par période"
+    else:
+        periodes_fictives = ["Semaine 1", "Semaine 2", "Semaine 3"]
+        df_viz["_per"] = [
+            periodes_fictives[i % len(periodes_fictives)] for i in range(len(df_viz))
+        ]
+        ordre_periodes = periodes_fictives
+        titre_periode = "Répartition des sentiments par période (fictive)"
+
+    sentiments = ["Positif", "Neutre", "Négatif"]
+    couleurs = {
+        "Positif": "#2ecc71",
+        "Neutre": "#95a5a6",
+        "Négatif": "#e74c3c",
+    }
+
+    st.markdown("#### 📈 Répartition par catégorie et par période")
+    fig, axes = plt.subplots(1, 2, figsize=(12, 4.2))
+
+    # 1. Par catégorie
+    ct_cat = pd.crosstab(df_viz["_cat"], df_viz["_sent"]).reindex(
+        columns=sentiments, fill_value=0
+    )
+    ct_cat.plot(
+        kind="bar",
+        stacked=True,
+        ax=axes[0],
+        color=[couleurs[s] for s in sentiments],
+    )
+    axes[0].set_title("Sentiments par catégorie")
+    axes[0].set_xlabel("Catégorie")
+    axes[0].set_ylabel("Nombre de réclamations")
+    axes[0].tick_params(axis="x", rotation=20)
+    axes[0].legend(title="Sentiment")
+
+    # 2. Par période
+    ct_per = pd.crosstab(df_viz["_per"], df_viz["_sent"]).reindex(
+        index=ordre_periodes, columns=sentiments, fill_value=0
+    )
+    ct_per.plot(
+        kind="bar",
+        stacked=False,
+        ax=axes[1],
+        color=[couleurs[s] for s in sentiments],
+    )
+    axes[1].set_title(titre_periode)
+    axes[1].set_xlabel("Période")
+    axes[1].set_ylabel("Nombre de réclamations")
+    axes[1].tick_params(axis="x", rotation=15)
+    axes[1].legend(title="Sentiment")
+
+    plt.tight_layout()
+    st.pyplot(fig)
+    plt.close(fig)
+
+
 def predire_liste(textes: list[str]) -> pd.DataFrame:
     preds = model.predict(textes)
+    categories = [detecter_categorie(t) for t in textes]
     if hasattr(model, "predict_proba"):
         probs_list = model.predict_proba(textes)
         confiances = [round(float(max(p)) * 100, 1) for p in probs_list]
         return pd.DataFrame({
             "Réclamation": textes,
+            "Catégorie": categories,
             "Sentiment": preds,
             "Confiance (%)": confiances,
         })
     return pd.DataFrame({
         "Réclamation": textes,
+        "Catégorie": categories,
         "Sentiment": preds,
     })
 
 
-def afficher_stats_sentiment(df_sent: pd.DataFrame, colonne_sent: str):
+def afficher_stats_sentiment(
+    df_sent: pd.DataFrame, colonne_sent: str, colonne_texte: str | None = None
+):
     total = len(df_sent)
     if total == 0:
         st.info("Aucune donnée à afficher.")
         return
 
-    counts = df_sent[colonne_sent].value_counts()
+    counts = df_sent[colonne_sent].apply(normaliser_sentiment).value_counts()
 
-    pos_count = int(counts.get("Positif", counts.get("positif", 0)))
-    neu_count = int(counts.get("Neutre", counts.get("neutre", 0)))
-    neg_count = int(
-        counts.get("Négatif", counts.get("Negatif", counts.get("negatif", 0)))
-    )
+    pos_count = int(counts.get("Positif", 0))
+    neu_count = int(counts.get("Neutre", 0))
+    neg_count = int(counts.get("Négatif", 0))
 
     pos_pct = (pos_count / total) * 100
     neu_pct = (neu_count / total) * 100
@@ -84,6 +246,9 @@ def afficher_stats_sentiment(df_sent: pd.DataFrame, colonne_sent: str):
     ).set_index("Sentiment")
 
     st.bar_chart(df_chart, height=300)
+
+    if colonne_texte is not None:
+        afficher_graphiques_categorie_periode(df_sent, colonne_texte, colonne_sent)
 
 
 # 2. Analyse d'une ou plusieurs réclamations (texte libre)
@@ -105,11 +270,13 @@ if st.button("Analyser le sentiment", type="primary"):
         st.warning("Veuillez saisir une réclamation avant de lancer l'analyse.")
     elif len(lignes) == 1:
         pred = model.predict([lignes[0]])[0]
+        cat_detectee = detecter_categorie(lignes[0])
         if hasattr(model, "predict_proba"):
             probs = model.predict_proba([lignes[0]])[0]
             confiance = float(max(probs)) * 100
             st.success(
-                f"**Sentiment détecté :** {pred} — **Confiance :** {confiance:.1f}%"
+                f"**Sentiment détecté :** {pred} — **Catégorie :** {cat_detectee}"
+                f" — **Confiance :** {confiance:.1f}%"
             )
 
             if hasattr(model, "classes_"):
@@ -119,12 +286,14 @@ if st.button("Analyser le sentiment", type="primary"):
                 })
                 st.dataframe(df_probs, use_container_width=True, hide_index=True)
         else:
-            st.success(f"**Sentiment détecté :** {pred}")
+            st.success(
+                f"**Sentiment détecté :** {pred} — **Catégorie :** {cat_detectee}"
+            )
     else:
         df_batch = predire_liste(lignes)
         st.success(f"{len(lignes)} réclamations analysées.")
         st.dataframe(df_batch, use_container_width=True, hide_index=True)
-        afficher_stats_sentiment(df_batch, "Sentiment")
+        afficher_stats_sentiment(df_batch, "Sentiment", colonne_texte="Réclamation")
 
 st.divider()
 
@@ -164,11 +333,11 @@ if fichier_csv is not None:
                 round(float(max(p)) * 100, 1) for p in probs_csv
             ]
 
-        st.success(
-            f"Analyse terminée sur {len(df_res_csv)} lignes."
-        )
+        st.success(f"Analyse terminée sur {len(df_res_csv)} lignes.")
         st.dataframe(df_res_csv, use_container_width=True, hide_index=True)
-        afficher_stats_sentiment(df_res_csv, "Sentiment_predit")
+        afficher_stats_sentiment(
+            df_res_csv, "Sentiment_predit", colonne_texte=col_choisie
+        )
 
         csv_export = df_res_csv.to_csv(index=False, encoding="utf-8").encode("utf-8")
         st.download_button(
@@ -196,7 +365,9 @@ if os.path.exists(DATA_PATH):
         if "sentiment" not in df_local.columns:
             df_local["sentiment"] = model.predict(textes_locaux)
 
-        afficher_stats_sentiment(df_local, "sentiment")
+        afficher_stats_sentiment(
+            df_local, "sentiment", colonne_texte=col_locale
+        )
         st.dataframe(df_local.head(20), use_container_width=True, hide_index=True)
     else:
         st.info(

@@ -8,13 +8,14 @@ Ce projet consiste à développer une solution d'Intelligence Artificielle capab
 
 **Prétraitement NLP :** Nettoyage et normalisation automatique des textes des réclamations avant l'analyse.
 **Classification automatique :** Prédiction du sentiment (_Positif_, _Négatif_, _Neutre_) accompagnée d'un score de confiance grâce à un modèle préentraîné[cite: 1].
-**Analyse des tendances globales :** Calcul des pourcentages par catégorie de sentiment et génération de graphiques (camemberts, histogrammes)[cite: 1].
+**Analyse des tendances globales :** Calcul des pourcentages par catégorie de sentiment et génération de graphiques (histogrammes)
 **Interface interactive :** Application web permettant de tester une réclamation en temps réel ou d'importer un fichier de données.
 
 ## 3. Technologies Utilisées _(Les outils techniques)_
 
 **Langage :** Python 3.x
-**NLP & Modèle préentraîné :** Hugging Face (`transformers`), PyTorch (`torch`), `scikit-learn`[cite: 1]
+**NLP & Machine Learning :** spacy, scikit-learn (TF-IDF + Régression Logistique)
+**Sauvegarde du modèle :** joblib
 **Traitement de données & Visualisation :** `pandas`, `numpy`, `matplotlib`
 **Interface Web :** `streamlit`
 

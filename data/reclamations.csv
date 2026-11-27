@@ -1,11 +1,156 @@
 reclamation,sentiment
 "Service tres rapide et equipe super aimable merci",Positif
-"Produit casse a la livraison et personne ne repond",Negatif
+"Produit casse a la livraison et personne ne repond",Négatif
 "Commande recue dans les delais prevus",Neutre
-"Facturation incorrecte deux mois de suite c est inadmissible",Negatif
+"Facturation incorrecte deux mois de suite c est inadmissible",Négatif
 "Tres satisfaite de la qualite du support technique",Positif
 "Le colis est arrive aujourd hui sans probleme particulier",Neutre
-"Livraison en retard et service client pas du tout cooperatif",Negatif
+"Livraison en retard et service client pas du tout cooperatif",Négatif
 "Bonne experience globale je recommande vivement",Positif
 "Rien a signaler la commande correspond a la description",Neutre
-"Application qui plante tout le temps tres decue",Negatif
+"Application qui plante tout le temps tres decue",Négatif
+"Très beau colis",Positif
+"Colis en retard service nul",Négatif
+"Commande reçue ce matin",Neutre
+"Livraison rapide et produit conforme",Positif
+"Produit abîmé à la réception",Négatif
+"Je souhaite connaître le statut de ma commande",Neutre
+"Magnifique produit je suis très satisfait",Positif
+"Je n'ai jamais reçu ma commande",Négatif
+"Quel est le délai de livraison",Neutre
+"Service client excellent et très réactif",Positif
+"Très déçu de la qualité du produit",Négatif
+"Colis réceptionné",Neutre
+"Emballage soigné et colis bien protégé",Positif
+"Le colis n'est pas arrivé",Négatif
+"Pouvez-vous me donner votre adresse de retour",Neutre
+"Qualité parfaite je recommande",Positif
+"Service client injoignable depuis une semaine",Négatif
+"Je voudrais modifier mon adresse de livraison",Neutre
+"Commande arrivée en avance merci beaucoup",Positif
+"Remboursement toujours pas reçu c'est inadmissible",Négatif
+"Ma commande est en cours de préparation",Neutre
+"Produit exactement comme sur la photo",Positif
+"Article non conforme à la description",Négatif
+"Comment puis-je suivre mon colis",Neutre
+"Très bon rapport qualité prix",Positif
+"Emballage déchiré et produit cassé",Négatif
+"Je souhaite changer la taille de mon article",Neutre
+"Le conseiller a résolu mon problème rapidement",Positif
+"Livraison très lente je ne recommande pas",Négatif
+"Le colis a été livré mardi",Neutre
+"Remboursement reçu en 48 heures service impeccable",Positif
+"Le livreur a été impoli",Négatif
+"Pouvez-vous m'envoyer la facture",Neutre
+"Je suis ravi de mon achat",Positif
+"Je suis très mécontent de cet achat",Négatif
+"Quels sont vos horaires d'ouverture",Neutre
+"Colis reçu en parfait état",Positif
+"Produit défectueux dès la première utilisation",Négatif
+"J'ai passé commande hier",Neutre
+"Livreur très aimable et ponctuel",Positif
+"On m'a livré le mauvais article",Négatif
+"Je voudrais un échange pour une autre couleur",Neutre
+"Site facile à utiliser et paiement sécurisé",Positif
+"Trop cher pour une si mauvaise qualité",Négatif
+"Quel est le numéro de suivi de ma commande",Neutre
+"Produit de grande qualité à un prix raisonnable",Positif
+"Personne ne répond à mes emails",Négatif
+"Le produit est arrivé dans un carton",Neutre
+"Échange effectué sans aucune difficulté",Positif
+"Commande annulée sans explication",Négatif
+"Je souhaite savoir si l'article est disponible",Neutre
+"Super expérience d'achat je reviendrai",Positif
+"Le site plante à chaque paiement",Négatif
+"Merci de confirmer la réception de ma demande",Neutre
+"Article conforme à la description",Positif
+"Colis perdu et aucune réponse du support",Négatif
+"Ma commande contient trois articles",Neutre
+"Équipe sympathique et à l'écoute",Positif
+"Produit pas conforme et de mauvaise qualité",Négatif
+"Comment faire une demande de retour",Neutre
+"Bravo pour la rapidité de la livraison",Positif
+"Je suis déçu du service après-vente",Négatif
+"Je dois changer mon mot de passe",Neutre
+"Le produit dépasse mes attentes",Positif
+"Couleur différente de la photo",Négatif
+"Le colis est arrivé vendredi après-midi",Neutre
+"Très content du service après-vente",Positif
+"Retard de livraison de dix jours",Négatif
+"Pouvez-vous me rappeler demain",Neutre
+"Livraison à l'heure et colis intact",Positif
+"Le conseiller n'a pas voulu m'aider",Négatif
+"Je voudrais connaître les modes de paiement",Neutre
+"Excellent travail merci à toute l'équipe",Positif
+"Facturé deux fois pour la même commande",Négatif
+"Commande numéro 4582 passée le 12 novembre",Neutre
+"Le téléphone fonctionne parfaitement",Positif
+"Très mauvaise expérience je ne reviendrai pas",Négatif
+"Le produit est de couleur noire",Neutre
+"Emballage écologique et très bien fait",Positif
+"Le colis est arrivé ouvert",Négatif
+"Où se trouve le point relais le plus proche",Neutre
+"Réponse rapide à mon email merci",Positif
+"Qualité médiocre et finition horrible",Négatif
+"Je souhaite résilier mon abonnement",Neutre
+"Je suis très satisfait de la qualité du produit",Positif
+"Aucun suivi de ma commande c'est scandaleux",Négatif
+"Avez-vous ce modèle en stock",Neutre
+"Belle finition et matériaux solides",Positif
+"Le produit ne fonctionne pas",Négatif
+"J'ai reçu un email de confirmation",Neutre
+"Prix avantageux et produit au top",Positif
+"Pas satisfait du tout",Négatif
+"Le colis pèse environ deux kilos",Neutre
+"Mon problème a été réglé en quelques minutes",Positif
+"Tres mauvais service colis en retard",Négatif
+"Je voudrais mettre à jour mes informations",Neutre
+"Commande simple et livraison express",Positif
+"Colis arrivé en retard et abimé",Négatif
+"Combien de temps pour un remboursement",Neutre
+"Tres beau produit livraison rapide",Positif
+"Attente interminable au téléphone",Négatif
+"Colis recu ce matin",Neutre
+"Le colis est arrivé plus tôt que prévu",Positif
+"Je demande un remboursement immédiat",Négatif
+"Pouvez-vous préciser les conditions de garantie",Neutre
+"Service impeccable je recommande vivement",Positif
+"Produit cassé personne ne répond",Négatif
+"La livraison est prévue la semaine prochaine",Neutre
+"Produit solide et très bien emballé",Positif
+"Le service est lamentable",Négatif
+"Je souhaite parler à un conseiller",Neutre
+"Le conseiller était patient et très professionnel",Positif
+"Pas du tout ce que j'avais commandé",Négatif
+"Le paiement a été effectué par carte",Neutre
+"Parfait rien à redire",Positif
+"La batterie ne tient pas deux heures",Négatif
+"Je voudrais changer la date de livraison",Neutre
+"Aucun problème tout est parfait",Positif
+"Frais de livraison cachés",Négatif
+"Mon colis est en transit",Neutre
+"Pas mal du tout très bon produit",Positif
+"Article manquant dans le colis",Négatif
+"Le produit est livré avec un manuel",Neutre
+"Très belle surprise à l'ouverture du colis",Positif
+"Honteux je n'ai jamais reçu mon remboursement",Négatif
+"Pouvez-vous me renvoyer le lien de suivi",Neutre
+"Remplacement gratuit et rapide merci",Positif
+"Colis très abîmé et sale",Négatif
+"J'ai créé un compte sur le site",Neutre
+"La couleur est magnifique",Positif
+"Mauvaise qualité je suis furieux",Négatif
+"Je voudrais des informations sur ce produit",Neutre
+"Application pratique et rapide",Positif
+"Le produit est tombé en panne après deux jours",Négatif
+"Le colis a été déposé chez le voisin",Neutre
+"Le colis est bien arrivé merci",Positif
+"Pas de réponse à ma réclamation",Négatif
+"Très bon accueil au téléphone",Positif
+"Retour impossible sur le site",Négatif
+"Qualité au rendez-vous",Positif
+"Je regrette mon achat",Négatif
+"Un grand merci pour votre aide",Positif
+"Le colis n'est pas conforme et le service est nul",Négatif
+"Mon colis est très beau et bien emballé",Positif
+"Livraison ratée et personne ne me rappelle",Négatif
